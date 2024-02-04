@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Include Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <title>Your Form</title>
+</head>
+
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+  <form id="form" class="max-w-md bg-white p-8 rounded shadow-md">
+    <div class="mb-4">
+      <h4>FILE IS WILL BE UPLOADED TO FOLDER </h4>
+    </div>
+
+    <div class="mb-4">
+      <label for="uploadfile" class="block text-gray-700 text-sm font-bold mb-2">File:</label>
+      <input name="file" id="uploadfile" type="file" class="w-full border rounded px-3 py-2" />
+    </div>
+
+    <button id="submit" name="submit" type="submit"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Submit
+    </button>
+  </form>
+
+  <div id="loading" tabindex="-1" style="display: none; background: gray;"
+    class="hidden overflow-x-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[100%] max-w-md">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="p-4 md:p-5 text-center">
+          <h3>Loading</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="success" tabindex="-1" style="display: none; background: gray;"
+  class="hidden overflow-x-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[100%] max-w-md">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="p-4 md:p-5 text-center">
+        <h3>File upload successfully</h3>
+        <button id="okButton" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 mt-4 rounded">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+    const form = document.getElementById("form");
+    const loadingDiv = document.getElementById("loading");
+    const successDiv = document.getElementById("success");
+    const okButton = document.getElementById("okButton");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      loadingDiv.style.display = "block"; // Show loading screen
+
+      const file = form.file.files[0];
+      const fr = new FileReader();
+
+      fr.readAsArrayBuffer(file);
+
+      fr.onload = (f) => {
+        const url = "https://script.google.com/macros/s/AKfycbyut9Pel1vdfQ_R3MDxm6-T2K_giK2NWjbvf1INLMsb0aP4E4MCHEgOQ5IRPtV6bcjyqQ/exec";
+
+        const qs = new URLSearchParams({
+          filename: file.name,
+          mimeType: file.type,
+        });
+
+        fetch(`${url}?${qs}`, {
+          method: "POST",
+          body: JSON.stringify([...new Int8Array(f.target.result)]),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data); // Log the response data
+            successDiv.style.display = "block"; // Show success message
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+            loadingDiv.style.display = "none"; // Hide loading screen
+          });
+      };
+    });
+
+      // Add an event listener to the "OK" button
+  okButton.addEventListener("click", () => {
+    successDiv.style.display = "none"; // Hide success message
+    form.reset(); // Reset the form
+  });
+  </script>
+</body>
+
+</html>
+<!-- 
+https://script.google.com/macros/s/AKfycbyut9Pel1vdfQ_R3MDxm6-T2K_giK2NWjbvf1INLMsb0aP4E4MCHEgOQ5IRPtV6bcjyqQ/exec -->
