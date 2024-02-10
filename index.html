@@ -2,105 +2,236 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Include Tailwind CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <title>Your Form</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--GOOGLE fonts links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Afacad&family=Marcellus&family=Montserrat&family=Quicksand&family=Slabo+27px&display=swap"
+        rel="stylesheet">
+
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <title>Your Form</title>
+
+    <style>
+        body {
+            background-color: #50E3C2;
+            background-image:
+                radial-gradient(at 47% 33%, hsl(162.00, 77%, 40%) 0, transparent 59%),
+                radial-gradient(at 82% 65%, hsl(198.00, 100%, 50%) 0, transparent 55%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Center the modal both vertically and horizontally */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 600px;
+            max-height: 549px;
+        }
+
+        .main-container {
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.50);
+            border-radius: 20px;
+            border: 1px solid rgba(209, 213, 219, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Adjust modal size for small screens */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                /* Adjust width for small screens */
+                max-width: nonepx;
+                /* Set maximum width */
+            }
+        }
+
+        /* Overlay styles for loading and success */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .dotlottie-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-center {
+            text-align: center;
+        }
+
+        .loading-center svg {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 h-screen flex items-center justify-center">
-  <form id="form" class="max-w-md bg-white p-8 rounded shadow-md">
-    <div class="mb-4">
-      <h4>FILE IS WILL BE UPLOADED TO FOLDER </h4>
-    </div>
+<body class="">
 
-    <div class="mb-4">
-      <label for="uploadfile" class="block text-gray-700 text-sm font-bold mb-2">File:</label>
-      <input name="file" id="uploadfile" type="file" class="w-full border rounded px-3 py-2" />
-    </div>
+    <!-- Main modal -->
+    <div id="" tabindex="-1" aria-hidden="true"
+        class="container p-8 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full">
+        <div class="relative w-full max-w-md">
+            <div class="relative rounded-lg shadow main-container">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900">
+                        File Will Uploaded To Drive
+                    </h3>
+                </div>
+                <div class="p-4 md:p-5">
+                    <form id="form" class="space-y-4" action="#">
+                        <div class="mb-4">
+                            <label class="block text-gray-900 text-sm font-bold mb-2" for="file_input">Upload
+                                file</label>
+                            <input name="file" id="uploadfile" type="file"
+                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                        </div>
 
-    <button id="submit" name="submit" type="submit"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-      Submit
-    </button>
-  </form>
+                        <button id="submit" name="submit" type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Submit
+                        </button>
 
-  <div id="loading" tabindex="-1" style="display: none; background: gray;"
-    class="hidden overflow-x-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[100%] max-w-md">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <div class="p-4 md:p-5 text-center">
-          <h3>Loading</h3>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-
-  <div id="success" tabindex="-1" style="display: none; background: gray;"
-  class="hidden overflow-x-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[100%] max-w-md">
-  <div class="relative p-4 w-full max-w-md max-h-full">
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-      <div class="p-4 md:p-5 text-center">
-        <h3>File upload successfully</h3>
-        <button id="okButton" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 mt-4 rounded">
-          OK
-        </button>
-      </div>
     </div>
-  </div>
-</div>
+    <!-- Loading overlay -->
+    <div id="loading" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700" style="border-radius: 30px;">
+                <div class="p-4 md:p-5 text-center">
+                    <div class="loading-center">
+                        <div role="status">
+                            <svg aria-hidden="true"
+                                class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                                viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                    fill="currentColor" />
+                                <path
+                                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                    fill="currentFill" />
+                            </svg>
+                            <h4 style="margin-top: 15px;">Please Wait...</h4>
+                            <span class="sr-only">Loading...</span>
 
-  <script>
-    const form = document.getElementById("form");
-    const loadingDiv = document.getElementById("loading");
-    const successDiv = document.getElementById("success");
-    const okButton = document.getElementById("okButton");
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    <!-- Success overlay -->
+    <div id="success" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700" style="border-radius: 30px;">
+                    <div class="p-4 md:p-5 text-center">
+                        <!--<svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">-->
+                        <div class="dotlottie-container">
+                            <dotlottie-player
+                                src="https://lottie.host/b262bbf7-05a6-4a30-b6e3-648b52389ffe/o5joDCtkZz.json"
+                                background="transparent" speed="1" style="width: 80px; height: 80px;" loop
+                                autoplay></dotlottie-player>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </div>
+                        <!--</svg>-->
+                        <h3 class="mb-5" style="color: rgb(45, 45, 45);">File Has Been Uploaded To Drive !</h3>
+                        <button data-modal-hide="popup-modal" type="button" id="okButton"
+                            class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-      loadingDiv.style.display = "block"; // Show loading screen
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <script>
+        const form = document.getElementById("form");
+        const loadingDiv = document.getElementById("loading");
+        const successDiv = document.getElementById("success");
+        const okButton = document.getElementById("okButton");
 
-      const file = form.file.files[0];
-      const fr = new FileReader();
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
 
-      fr.readAsArrayBuffer(file);
+            loadingDiv.style.display = "flex"; // Show loading screen
 
-      fr.onload = (f) => {
-        const url = "https://script.google.com/macros/s/AKfycbyut9Pel1vdfQ_R3MDxm6-T2K_giK2NWjbvf1INLMsb0aP4E4MCHEgOQ5IRPtV6bcjyqQ/exec";
+            const file = form.file.files[0];
+            const fr = new FileReader();
 
-        const qs = new URLSearchParams({
-          filename: file.name,
-          mimeType: file.type,
+            fr.readAsArrayBuffer(file);
+
+            fr.onload = (f) => {
+                const url = "https://script.google.com/macros/s/AKfycbyut9Pel1vdfQ_R3MDxm6-T2K_giK2NWjbvf1INLMsb0aP4E4MCHEgOQ5IRPtV6bcjyqQ/exec";
+
+                const qs = new URLSearchParams({
+                    filename: file.name,
+                    mimeType: file.type,
+                });
+
+                fetch(`${url}?${qs}`, {
+                    method: "POST",
+                    body: JSON.stringify([...new Int8Array(f.target.result)]),
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log(data); // Log the response data
+                        successDiv.style.display = "flex"; // Show success message
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        loadingDiv.style.display = "none"; // Hide loading screen
+                    });
+            };
         });
 
-        fetch(`${url}?${qs}`, {
-          method: "POST",
-          body: JSON.stringify([...new Int8Array(f.target.result)]),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data); // Log the response data
-            successDiv.style.display = "block"; // Show success message
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-          .finally(() => {
-            loadingDiv.style.display = "none"; // Hide loading screen
-          });
-      };
-    });
-
-      // Add an event listener to the "OK" button
-  okButton.addEventListener("click", () => {
-    successDiv.style.display = "none"; // Hide success message
-    form.reset(); // Reset the form
-  });
-  </script>
+        // Add an event listener to the "OK" button
+        okButton.addEventListener("click", () => {
+            successDiv.style.display = "none"; // Hide success message
+            form.reset(); // Reset the form
+        });
+    </script>
 </body>
 
 </html>
-<!-- 
-https://script.google.com/macros/s/AKfycbyut9Pel1vdfQ_R3MDxm6-T2K_giK2NWjbvf1INLMsb0aP4E4MCHEgOQ5IRPtV6bcjyqQ/exec -->
